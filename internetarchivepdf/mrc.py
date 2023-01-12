@@ -33,8 +33,8 @@ from skimage.restoration import denoise_tv_bregman, estimate_sigma
 from scipy import ndimage
 import numpy as np
 
-from optimiser import optimise_gray, optimise_rgb, optimise_gray2, optimise_rgb2, fast_mask_denoise
-from sauvola import binarise_sauvola
+from ext.optimiser import optimise_gray, optimise_rgb, optimise_gray2, optimise_rgb2, fast_mask_denoise
+from ext.sauvola import binarise_sauvola
 
 import fitz
 
@@ -331,13 +331,17 @@ def create_threshold_mask(mask_arr, imgf, dpi=None, denoise_mask=None, timing_da
 
 # TODO: Reduce amount of memory active at one given point (keep less images in
 # memory, write to disk sooner, etc), careful with numpy <-> PIL conversions
-def create_mrc_hocr_components(image, hocr_word_data,
-                               dpi=None,
-                               downsample=None,
-                               bg_downsample=None,
-                               fg_downsample=None,
-                               denoise_mask=None, timing_data=None,
-                               errors=None):
+def create_mrc_hocr_components(
+    image,
+    hocr_word_data,
+    dpi=None,
+    downsample=None,
+    bg_downsample=None,
+    fg_downsample=None,
+    denoise_mask=None,
+    timing_data=None,
+    errors=None
+):
     """
     Create the MRC components: mask, foreground and background
 
@@ -466,8 +470,14 @@ def create_mrc_hocr_components(image, hocr_word_data,
     return
 
 
-def encode_mrc_mask(np_mask, tmp_dir=None, jbig2=True, embedded_jbig2=False,
-                    timing_data=None, debug=False):
+def encode_mrc_mask(
+    np_mask,
+    tmp_dir=None,
+    jbig2=True,
+    embedded_jbig2=False,
+    timing_data=None,
+    debug=False
+):
     """
     Encode mask image either to JBIG2 or PNG.
 

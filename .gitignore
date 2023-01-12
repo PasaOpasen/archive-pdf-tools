@@ -3,3 +3,9 @@
 **.pyc
 docs/build/
 build/
+
+.idea
+
+/**/*.html
+
+
