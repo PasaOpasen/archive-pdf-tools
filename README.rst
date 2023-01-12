@@ -71,13 +71,24 @@ Installation
 
 First install dependencies. For example, in Ubuntu::
 
+```
+sudo apt install libleptonica-dev libopenjp2-tools libxml2-dev libxslt-dev python3-dev python3-pip
+```
+Notes: on fedora it is `sudo dnf install leptonica-devel openjpeg2-tools libxml2-devel libxslt-devel`
 
-    sudo apt install libleptonica-dev libopenjp2-tools libxml2-dev libxslt-dev python3-dev python3-pip
-    git clone https://github.com/agl/jbig2enc
-    cd jbig2enc
-    ./autogen.sh
-    ./configure && make
-    sudo make install
+Install `jbig2`:
+```
+git clone https://github.com/agl/jbig2enc
+cd jbig2enc
+./autogen.sh
+./configure && make
+sudo make install
+```
+or
+```
+sudo snap install jbig2enc --edge
+alias jbig2=jbig2enc
+```
 
 
 Because `archive-pdf-tools` is on the `Python Package Index <https://pypi.org/project/archive-pdf-tools/>`_ (PyPI), you can use `pip` (the Python 3 version is often called `pip3`) to install the latest version::

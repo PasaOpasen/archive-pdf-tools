@@ -41,8 +41,10 @@ OPJ_DECOMPRESS = 'opj_decompress'
 GRK_COMPRESS = 'grk_compress'
 GRK_DECOMPRESS = 'grk_decompress'
 
-def encode_jpeg2000(image, outpath, impl, flags, tmp_dir=None, imgtype=None,
-        threads=None, debug=False):
+def encode_jpeg2000(
+        image, outpath, impl, flags, tmp_dir=None, imgtype=None,
+        threads=None, debug=False
+):
     """ Encode PIL image to JPEG2000 file
 
     Args:

@@ -504,9 +504,9 @@ def encode_mrc_mask(
     mask.save(mask_img_png, compress_level=0)
 
     if jbig2:
-        args = ['jbig2', mask_img_png]
+        args = ['jbig2enc', mask_img_png]
         if embedded_jbig2:
-            args = ['jbig2', '-p', mask_img_png]
+            args = ['jbig2enc', '-p', mask_img_png]
 
         if debug:
             print('check_output: %s' % args, file=sys.stderr)

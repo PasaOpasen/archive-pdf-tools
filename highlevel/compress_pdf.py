@@ -5,7 +5,7 @@ import fitz
 from PIL import Image
 from hocr.parse import hocr_page_to_word_data
 
-from internetarchivepdf.const import DENOISE_FAST, JPEG2000_IMPL_KAKADU, JPEG2000_IMPL_PILLOW
+from internetarchivepdf.const import DENOISE_FAST, JPEG2000_IMPL_KAKADU, JPEG2000_IMPL_PILLOW, COMPRESSOR_JPEG
 from internetarchivepdf.mrc import create_mrc_hocr_components, encode_mrc_images
 
 
@@ -58,31 +58,41 @@ def compress_page_images(doc: fitz.Document, page: fitz.Page, hocr_word_data=[])
             bg_downsample=3
         )
 
-        # with pillow
         encode_kwargs = dict(
             mrc_gen=mrc_gen,
 
             jbig2=True,
+            embedded_jbig2=False,
 
-            jpeg2000_implementation=JPEG2000_IMPL_PILLOW,
-            bg_compression_flags=['quality_mode:"rates";quality_layers:[500]'],
-            fg_compression_flags=['quality_mode:"rates";quality_layers:[750]'],
+            tmp_dir='./',
+        )
+
+        # with pillow
+        encode_kwargs.update(
+            dict(
+                jpeg2000_implementation=JPEG2000_IMPL_PILLOW,
+                bg_compression_flags=['quality_mode:"rates";quality_layers:[500]'],
+                fg_compression_flags=['quality_mode:"rates";quality_layers:[750]'],
+            )
         )
 
         # with jpegoptim
-        #mask_f, bg_f, bg_s, fg_f, fg_s = encode_mrc_images(mrc_gen,
-        #        mrc_image_format=COMPRESSOR_JPEG,
-        #        bg_compression_flags=['-S30'],
-        #        fg_compression_flags=['-S20'],
-        #        )
+        # encode_kwargs.update(
+        #     dict(
+        #         mrc_image_format=COMPRESSOR_JPEG,
+        #         bg_compression_flags=['-S30'],
+        #         fg_compression_flags=['-S20'],
+        #     )
+        # )
 
         # fg_slope = 44500
         # bg_slope = 44250
-        # mask_f, bg_f, bg_s, fg_f, fg_s = encode_mrc_images(
-        #     mrc_gen,
-        #     jpeg2000_implementation=JPEG2000_IMPL_KAKADU,
-        #     bg_compression_flags=['-slope', str(bg_slope)],
-        #     fg_compression_flags=['-slope', str(fg_slope)],
+        # encode_kwargs.update(
+        #     dict(
+        #         jpeg2000_implementation=JPEG2000_IMPL_KAKADU,
+        #         bg_compression_flags=['-slope', str(bg_slope)],
+        #         fg_compression_flags=['-slope', str(fg_slope)],
+        #     )
         # )
 
         mask_f, bg_f, bg_s, fg_f, fg_s = encode_mrc_images(**encode_kwargs)
