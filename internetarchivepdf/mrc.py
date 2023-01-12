@@ -635,13 +635,26 @@ def encode_mrc_foreground(np_fg, fg_compression_flags, tmp_dir=None,
             debug=debug)
 
 
-def encode_mrc_images(mrc_gen, bg_compression_flags=None, fg_compression_flags=None,
-                      tmp_dir=None, jbig2=True, timing_data=None,
-                      jpeg2000_implementation=None, mrc_image_format=None,
-                      embedded_jbig2=False, threads=None, debug=False):
-    mask_img_jbig2, mask_img_png = encode_mrc_mask(next(mrc_gen),
-            tmp_dir=tmp_dir, jbig2=jbig2, embedded_jbig2=embedded_jbig2,
-            timing_data=timing_data)
+def encode_mrc_images(
+    mrc_gen,
+    bg_compression_flags=None,
+    fg_compression_flags=None,
+    tmp_dir=None,
+    jbig2=True,
+    timing_data=None,
+    jpeg2000_implementation=None,
+    mrc_image_format=None,
+    embedded_jbig2=False,
+    threads=None,
+    debug=False
+):
+    mask_img_jbig2, mask_img_png = encode_mrc_mask(
+        next(mrc_gen),
+        tmp_dir=tmp_dir,
+        jbig2=jbig2,
+        embedded_jbig2=embedded_jbig2,
+        timing_data=timing_data
+    )
 
     np_fg = next(mrc_gen)
     fg_img_jp2 = encode_mrc_foreground(np_fg, fg_compression_flags, tmp_dir=tmp_dir,
